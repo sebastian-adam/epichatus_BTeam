@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
       found_user
     else
       user = User.find_by email: email
-      password_hash = Password.new(user.secure_password)
+      password_hash = Password.new(user.password)
       if password_hash == password
         found_user = user
       end
