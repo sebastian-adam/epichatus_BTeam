@@ -10,18 +10,17 @@ class User < ActiveRecord::Base
   def self.authenticate(params = {})
     email = params[:email]
     password = params[:password]
-    return nil if !(User.find_by email: email)
-    user = User.find_by email: email
-
-    password_hash = Password.new(user.password_secure)
-
-
-
-
-
-
-
-    password_hash = Password.new()
+    found_user = nil
+    if !(User.find_by email: email)
+      found_user
+    else
+      user = User.find_by email: email
+      password_hash = Password.new(user.secure_password)
+      if password_hash == password
+        found_user = user
+      end
+      found_user
+    end
   end
 
 
